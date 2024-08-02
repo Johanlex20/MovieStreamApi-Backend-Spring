@@ -1,10 +1,13 @@
 package com.Movie_Spring.MovieSteamApi_Backend_Spring.configuration;
+import org.springframework.context.annotation.Configuration;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+@Configuration
 public class ConsumoApiMovieDB {
     public String obtenerDatosApi(String url){
         HttpClient client = HttpClient.newHttpClient();
