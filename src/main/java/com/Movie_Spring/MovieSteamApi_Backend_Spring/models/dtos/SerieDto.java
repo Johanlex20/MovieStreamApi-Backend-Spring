@@ -1,4 +1,4 @@
-package com.Movie_Spring.MovieSteamApi_Backend_Spring.models;
+package com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

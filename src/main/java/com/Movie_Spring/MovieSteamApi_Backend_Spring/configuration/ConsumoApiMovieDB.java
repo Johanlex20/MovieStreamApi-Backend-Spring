@@ -24,9 +24,9 @@ public class ConsumoApiMovieDB {
             throw new RuntimeException(e);
         }
         //System.out.println(response.body());
-        //String json = response.body();
-        //return json;
-        return response.body();
+        String json = response.body();
+        return json;
+        //return response.body();
     }
 
 }
