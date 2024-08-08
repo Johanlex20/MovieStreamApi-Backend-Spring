@@ -4,6 +4,8 @@ import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.SerieDto;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity
 @Table(name = "series")
 @Data
@@ -30,6 +32,10 @@ public class Serie {
 
     @Enumerated(EnumType.STRING)
     private Genero genero;
+
+    @OneToMany(mappedBy = "serie", cascade = CascadeType.ALL)
+    private List<Temporada> temporadas;
+
 
     public Serie(SerieDto serieDto) {
         this.idSerie = serieDto.idSerie();
