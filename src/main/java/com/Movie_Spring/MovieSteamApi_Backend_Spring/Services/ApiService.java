@@ -1,6 +1,7 @@
 package com.Movie_Spring.MovieSteamApi_Backend_Spring.Services;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.configuration.ConsumoApiMovieDB;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.DatoApi;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.EpisodioDto;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.SerieDto;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.TemporadaDto;
 import org.springframework.stereotype.Service;
@@ -34,4 +35,9 @@ public class ApiService {
         String json = consumoApiMovieDB.obtenerDatosApi(API_BASE + "tv/" + idSerie + "/season/" + numeroTemporada + "?" + API_IDIOMA_ES);
         return convertirDatos.convertirDatos(json, TemporadaDto.class);
     }
+
+//    public EpisodioDto obtenerDatosEpisodio(Long idSerie, int numeroTemporada, int numeroEpisodio){
+//        String json = consumoApiMovieDB.obtenerDatosApi(API_BASE + "tv/" + idSerie + "/season/" + numeroTemporada + "/episode/" + numeroEpisodio + "?" + API_IDIOMA_ES);
+//        return convertirDatos.convertirDatos(json, EpisodioDto.class);
+//    }
 }

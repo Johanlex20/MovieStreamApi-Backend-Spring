@@ -1,9 +1,12 @@
 package com.Movie_Spring.MovieSteamApi_Backend_Spring.Services;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Episodio;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Serie;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Temporada;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.EpisodioDto;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.NombreSerieDto;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.SerieDto;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.TemporadaDto;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.repository.iEpisodioRepository;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.repository.iSerieRepository;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.repository.iTemporadaRepository;
 import org.springframework.stereotype.Service;
@@ -16,11 +19,13 @@ public class SerieService {
     private final ApiService apiService;
     private final iSerieRepository serieRepository;
     private final iTemporadaRepository temporadaRepository;
+    private final iEpisodioRepository episodioRepository;
 
-    public SerieService(ApiService apiService, iSerieRepository serieRepository, iTemporadaRepository temporadaRepository) {
+    public SerieService(ApiService apiService, iSerieRepository serieRepository, iTemporadaRepository temporadaRepository, iEpisodioRepository episodioRepository) {
         this.apiService = apiService;
         this.serieRepository = serieRepository;
         this.temporadaRepository = temporadaRepository;
+        this.episodioRepository = episodioRepository;
     }
 
     public Serie guardarSerie(NombreSerieDto nombreSerieDto){
@@ -51,9 +56,21 @@ public class SerieService {
             }
             temporadaRepository.saveAll(temporadas);
 
+            for (Temporada temporada : temporadas){
+                List<Episodio> episodios = new ArrayList<>();
+                TemporadaDto temporadaDto = apiService.obtenerDatosTemporada(serieNew.idSerie(), temporada.getNumeroTemporada());
 
-
+                for (EpisodioDto episodioDto : temporadaDto.episodios()){
+                    Episodio episodio = new Episodio(episodioDto);
+                    episodio.setTemporada(temporada);
+                    episodio.setTituloSerie(serie.getTitulo());
+                    episodios.add(episodio);
+                }
+                episodioRepository.saveAll(episodios);
+                temporada.setEpisodios(episodios);
+            }
             return serieRepository.save(serie);
+
         }else {
             return null;
         }

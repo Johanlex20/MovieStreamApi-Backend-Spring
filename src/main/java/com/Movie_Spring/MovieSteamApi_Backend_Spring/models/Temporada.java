@@ -3,6 +3,8 @@ import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.TemporadaDto;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity
 @Table(name = "temporadas")
 @Data
@@ -26,6 +28,9 @@ public class Temporada {
     private Serie serie;
 
     private String tituloSerie;
+
+    @OneToMany(mappedBy = "temporada", cascade = CascadeType.ALL)
+    private List<Episodio> episodios;
 
     public Temporada() {
     }
