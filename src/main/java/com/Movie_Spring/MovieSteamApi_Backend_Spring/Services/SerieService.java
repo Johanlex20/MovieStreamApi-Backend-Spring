@@ -1,7 +1,6 @@
 package com.Movie_Spring.MovieSteamApi_Backend_Spring.Services;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.Services.iServices.iSerieService;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Episodio;
-import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Genero;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Serie;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Temporada;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.*;
@@ -11,7 +10,6 @@ import com.Movie_Spring.MovieSteamApi_Backend_Spring.repository.iTemporadaReposi
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -118,7 +116,8 @@ public class SerieService implements iSerieService {
 
     @Override
     public Boolean eliminarSerie(Long id) {
-        return null;
+        serieRepository.deleteById(id);
+        return true;
     }
 
     public SerieDBDto convertirSerieDtoAObjeto(Serie serie){

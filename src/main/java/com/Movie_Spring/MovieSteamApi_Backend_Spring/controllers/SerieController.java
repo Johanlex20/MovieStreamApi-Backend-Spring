@@ -48,4 +48,9 @@ public class SerieController {
     public SerieDBDto actualizarSerie(@PathVariable(value = "id") Long id, @RequestBody SerieActualizarDTO serieActualizarDTO){
         return serieService.actualizarSerie(id,serieActualizarDTO);
     }
+
+    @DeleteMapping(value = "/{id}")
+    public Boolean eliminarSerie(@PathVariable(value = "id") Long id){
+        return serieService.eliminarSerie(id);
+    }
 }
