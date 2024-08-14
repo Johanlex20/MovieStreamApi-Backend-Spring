@@ -5,6 +5,10 @@ import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Serie;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.NombreSerieDto;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.SerieDBDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,5 +32,10 @@ public class SerieController {
     @GetMapping("/list")
     public List<SerieDBDto> findAll(){
         return serieService.findAll();
+    }
+
+    @GetMapping
+    public Page<SerieDBDto> paginacion(@PageableDefault(sort = "titulo", direction = Sort.Direction.ASC, size = 2) Pageable pageable){
+        return serieService.paginacion(pageable);
     }
 }

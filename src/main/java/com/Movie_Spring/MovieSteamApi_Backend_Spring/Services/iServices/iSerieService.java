@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface iSerieService {
     List<SerieDBDto> findAll();
-    Page<Serie> paginacion(Pageable pageable);
+    Page<SerieDBDto> paginacion(Pageable pageable);
     Serie findById(Long id);
     Serie guardarSerie(NombreSerieDto nombreSerieDto);
     Serie actualizarSerie(Long id, Serie serie);

@@ -40,8 +40,9 @@ public class SerieService implements iSerieService {
     }
 
     @Override
-    public Page<Serie> paginacion(Pageable pageable) {
-        return null;
+    public Page<SerieDBDto> paginacion(Pageable pageable) {
+        Page<Serie> series = serieRepository.findAll(pageable);
+        return series.map(this::convertirSerieDtoAObjeto);
     }
 
     @Override
