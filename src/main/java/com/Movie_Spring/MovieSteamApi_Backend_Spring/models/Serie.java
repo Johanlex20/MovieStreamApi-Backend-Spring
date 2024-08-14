@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -37,6 +38,13 @@ public class Serie {
 
     @OneToMany(mappedBy = "serie", cascade = CascadeType.ALL)
     private List<Temporada> temporadas;
+
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
     public Serie() {
     }

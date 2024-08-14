@@ -1,17 +1,18 @@
 package com.Movie_Spring.MovieSteamApi_Backend_Spring.Services;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.Services.iServices.iSerieService;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Episodio;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Genero;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Serie;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Temporada;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.*;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.repository.iEpisodioRepository;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.repository.iSerieRepository;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.repository.iTemporadaRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,8 +47,9 @@ public class SerieService implements iSerieService {
     }
 
     @Override
-    public Serie findById(Long id) {
-        return null;
+    public SerieDBDto findById(Long id) {
+        Serie serie = serieRepository.findById(id).orElseThrow(()-> new RuntimeException("Serie ID: "+id+" No encontrada"));
+        return convertirSerieDtoAObjeto(serie);
     }
 
     public Serie guardarSerie(NombreSerieDto nombreSerieDto){
@@ -65,6 +67,7 @@ public class SerieService implements iSerieService {
                     serieDto.numEpisodiosTotal(),
                     serieDto.genero());
             Serie serie = new Serie(serieNew);
+            serie.setCreatedAt(LocalDateTime.now());
             serie = serieRepository.save(serie);  //Hasta aqui guardamos los datos de la serie
 
 
@@ -100,8 +103,17 @@ public class SerieService implements iSerieService {
     }
 
     @Override
-    public Serie actualizarSerie(Long id, Serie serie) {
-        return null;
+    public SerieDBDto actualizarSerie(Long id, SerieActualizarDTO serieActualizarDTO) {
+
+        Serie serie = serieRepository.findById(id).orElseThrow(()->new RuntimeException("Serie no encontrada con Id: " + id));
+
+        serie.setTitulo(serieActualizarDTO.getTitulo());
+        serie.setSinopsis(serieActualizarDTO.getSinopsis());
+        serie.setPoster(serieActualizarDTO.getPoster());
+        serie.setGenero(serieActualizarDTO.getGenero());
+        serie.setUpdatedAt(LocalDateTime.now());
+        serie = serieRepository.save(serie);
+        return convertirSerieDtoAObjeto(serie);
     }
 
     @Override

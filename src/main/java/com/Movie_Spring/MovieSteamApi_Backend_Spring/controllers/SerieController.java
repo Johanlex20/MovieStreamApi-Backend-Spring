@@ -3,6 +3,7 @@ import com.Movie_Spring.MovieSteamApi_Backend_Spring.Services.SerieService;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.Services.iServices.iSerieService;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Serie;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.NombreSerieDto;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.SerieActualizarDTO;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.SerieDBDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -37,5 +37,15 @@ public class SerieController {
     @GetMapping
     public Page<SerieDBDto> paginacion(@PageableDefault(sort = "titulo", direction = Sort.Direction.ASC, size = 2) Pageable pageable){
         return serieService.paginacion(pageable);
+    }
+
+    @GetMapping("/{id}")
+    public SerieDBDto findById(@PathVariable(value = "id") Long id){
+        return serieService.findById(id);
+    }
+
+    @PutMapping(value = "/{id}")
+    public SerieDBDto actualizarSerie(@PathVariable(value = "id") Long id, @RequestBody SerieActualizarDTO serieActualizarDTO){
+        return serieService.actualizarSerie(id,serieActualizarDTO);
     }
 }
