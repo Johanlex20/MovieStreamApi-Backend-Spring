@@ -1,8 +1,8 @@
 package com.Movie_Spring.MovieSteamApi_Backend_Spring.Services.iServices;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Serie;
-import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.NombreSerieDto;
-import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.SerieActualizarDTO;
-import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.SerieDBDto;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.recordConsumoApi.NombreSerieDto;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.serie.SerieActualizarDTO;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.serie.SerieDBDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import java.util.List;

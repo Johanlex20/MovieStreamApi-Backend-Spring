@@ -1,5 +1,5 @@
 package com.Movie_Spring.MovieSteamApi_Backend_Spring.models;
-import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.TemporadaDto;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.recordConsumoApi.TemporadaDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;

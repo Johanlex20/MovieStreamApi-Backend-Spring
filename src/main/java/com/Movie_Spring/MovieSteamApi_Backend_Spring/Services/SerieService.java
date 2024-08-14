@@ -3,7 +3,12 @@ import com.Movie_Spring.MovieSteamApi_Backend_Spring.Services.iServices.iSerieSe
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Episodio;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Serie;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Temporada;
-import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.*;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.recordConsumoApi.EpisodioDto;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.recordConsumoApi.NombreSerieDto;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.recordConsumoApi.SerieDto;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.recordConsumoApi.TemporadaDto;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.serie.SerieActualizarDTO;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.serie.SerieDBDto;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.repository.iEpisodioRepository;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.repository.iSerieRepository;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.repository.iTemporadaRepository;

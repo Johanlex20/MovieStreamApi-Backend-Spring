@@ -1,4 +1,4 @@
-package com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos;
+package com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.serie;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Genero;
 import lombok.Data;
 

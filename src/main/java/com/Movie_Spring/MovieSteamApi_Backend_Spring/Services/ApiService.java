@@ -1,9 +1,8 @@
 package com.Movie_Spring.MovieSteamApi_Backend_Spring.Services;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.configuration.ConsumoApiMovieDB;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.DatoApi;
-import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.EpisodioDto;
-import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.SerieDto;
-import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.TemporadaDto;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.recordConsumoApi.SerieDto;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.recordConsumoApi.TemporadaDto;
 import org.springframework.stereotype.Service;
 
 @Service

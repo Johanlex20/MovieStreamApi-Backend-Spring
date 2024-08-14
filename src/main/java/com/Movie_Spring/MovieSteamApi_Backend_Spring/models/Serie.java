@@ -1,8 +1,6 @@
 package com.Movie_Spring.MovieSteamApi_Backend_Spring.models;
-import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.GeneroDto;
-import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.SerieDto;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.recordConsumoApi.GeneroDto;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.recordConsumoApi.SerieDto;
 import jakarta.persistence.*;
 import lombok.Data;
 
