@@ -5,6 +5,8 @@ import lombok.Data;
 @Data
 public class SerieDBDto {
 
+    private Long id;
+
     private Long idSerie;
 
     private String titulo;

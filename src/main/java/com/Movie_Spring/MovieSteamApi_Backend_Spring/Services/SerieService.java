@@ -33,19 +33,9 @@ public class SerieService implements iSerieService {
 
     @Override
     public List<SerieDBDto> findAll() {
-        return serieRepository.findAll().stream()
-                .map(serie -> {
-                    SerieDBDto seriedto = new SerieDBDto();
-                    seriedto.setIdSerie(serie.getIdSerie());
-                    seriedto.setTitulo(serie.getTitulo());
-                    seriedto.setSinopsis(serie.getSinopsis());
-                    seriedto.setPoster(serie.getPoster());
-                    seriedto.setPopularidad(serie.getPopularidad());
-                    seriedto.setNumTemporadas(serie.getNumTemporadas());
-                    seriedto.setNumEpisodiosTotal(serie.getNumEpisodiosTotal());
-                    seriedto.setGenero(serie.getGenero());
-                    return seriedto;
-                })
+        List<Serie> series = serieRepository.findAll();
+        return series.stream()
+                .map(this::convertirSerieDtoAObjeto)
                 .collect(Collectors.toList());
     }
 
@@ -116,5 +106,19 @@ public class SerieService implements iSerieService {
     @Override
     public Boolean eliminarSerie(Long id) {
         return null;
+    }
+
+    public SerieDBDto convertirSerieDtoAObjeto(Serie serie){
+        SerieDBDto serieDBDto = new SerieDBDto();
+        serieDBDto.setId(serie.getId());
+        serieDBDto.setIdSerie(serie.getIdSerie());
+        serieDBDto.setTitulo(serie.getTitulo());
+        serieDBDto.setSinopsis(serie.getSinopsis());
+        serieDBDto.setPoster(serie.getPoster());
+        serieDBDto.setPopularidad(serie.getPopularidad());
+        serieDBDto.setNumTemporadas(serie.getNumTemporadas());
+        serieDBDto.setNumEpisodiosTotal(serie.getNumEpisodiosTotal());
+        serieDBDto.setGenero(serie.getGenero());
+        return serieDBDto;
     }
 }
