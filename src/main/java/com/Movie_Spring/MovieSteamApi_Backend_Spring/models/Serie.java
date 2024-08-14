@@ -1,6 +1,8 @@
 package com.Movie_Spring.MovieSteamApi_Backend_Spring.models;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.GeneroDto;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.SerieDto;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -36,6 +38,8 @@ public class Serie {
     @OneToMany(mappedBy = "serie", cascade = CascadeType.ALL)
     private List<Temporada> temporadas;
 
+    public Serie() {
+    }
 
     public Serie(SerieDto serieDto) {
         this.idSerie = serieDto.idSerie();

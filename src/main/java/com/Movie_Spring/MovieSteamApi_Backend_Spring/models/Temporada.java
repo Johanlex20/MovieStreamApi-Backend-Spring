@@ -1,5 +1,6 @@
 package com.Movie_Spring.MovieSteamApi_Backend_Spring.models;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.TemporadaDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -25,6 +26,7 @@ public class Temporada {
     private Double promedioTemporada;
 
     @ManyToOne
+    @JsonIgnore // Evitar serialización de la serie en la temporada
     private Serie serie;
 
     private String tituloSerie;

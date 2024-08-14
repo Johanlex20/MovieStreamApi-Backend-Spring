@@ -1,17 +1,20 @@
 package com.Movie_Spring.MovieSteamApi_Backend_Spring.controllers;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.Services.SerieService;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.Services.iServices.iSerieService;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Serie;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.NombreSerieDto;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.SerieDBDto;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/series")
 public class SerieController {
 
-    private final SerieService serieService;
+    @Autowired
+    private iSerieService serieService;
 
     public SerieController(SerieService serieService) {
         this.serieService = serieService;
@@ -20,5 +23,10 @@ public class SerieController {
     @PostMapping("/buscar")
     public Serie buscarSerie(@RequestBody NombreSerieDto nombreSerieDto){
         return serieService.guardarSerie(nombreSerieDto);
+    }
+
+    @GetMapping("/list")
+    public List<SerieDBDto> findAll(){
+        return serieService.findAll();
     }
 }
