@@ -3,7 +3,6 @@ import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.recordConsumoAp
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
-
 import java.util.List;
 
 @Entity
