@@ -8,6 +8,6 @@ public interface iTemporadaRepository extends JpaRepository<Temporada, Long> {
 
     List<Temporada> findBytituloSerie(String titulo);
 
-    Optional<Temporada> findByTituloSerieAndNumeroTemporada(String titulo, Long numeroTemporada);
+    Temporada findByTituloSerieAndNumeroTemporada(String titulo, Long numeroTemporada);
 
 }

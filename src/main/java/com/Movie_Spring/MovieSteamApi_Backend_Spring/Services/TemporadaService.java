@@ -28,9 +28,8 @@ public class TemporadaService implements iTemporadaService {
     }
 
     @Override
-    public Temporadas findByTituloSerieAndNumeroTemporada(String titulo, Long numeroTemporada) {
-        Optional<Temporada> temporada = temporadaRepository.findByTituloSerieAndNumeroTemporada(titulo, numeroTemporada);
-        return temporada.map(this::convertirTemporadasDto).orElseThrow();
+    public Temporada findByTituloSerieAndNumeroTemporada(String titulo, Long numeroTemporada) {
+        return temporadaRepository.findByTituloSerieAndNumeroTemporada(titulo, numeroTemporada);
     }
 
 

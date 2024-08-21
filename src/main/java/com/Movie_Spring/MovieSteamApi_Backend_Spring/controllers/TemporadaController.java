@@ -6,6 +6,7 @@ import com.Movie_Spring.MovieSteamApi_Backend_Spring.repository.iTemporadaReposi
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api/temporada")
@@ -28,7 +29,7 @@ public class TemporadaController {
     }
 
     @GetMapping("/temporadaId")
-    public Temporadas findByTituloSerieAndNumeroTemporada(@RequestParam String titulo, @RequestParam Long numeroTemporada){
+    public Temporada findByTituloSerieAndNumeroTemporada(@RequestParam String titulo, @RequestParam Long numeroTemporada){
         return temporadaService.findByTituloSerieAndNumeroTemporada(titulo, numeroTemporada);
     }
 
