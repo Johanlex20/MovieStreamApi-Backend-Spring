@@ -23,8 +23,13 @@ public class TemporadaController {
     }
 
     @GetMapping("/temporadas/{titulo}")
-    List<Temporadas>findBytituloSerie(@PathVariable(value = "titulo") String titulo){
+    public List<Temporadas>findBytituloSerie(@PathVariable(value = "titulo") String titulo){
         return temporadaService.findByTituloSerie(titulo);
+    }
+
+    @GetMapping("/temporadaId")
+    public Temporadas findByTituloSerieAndNumeroTemporada(@RequestParam String titulo, @RequestParam Long numeroTemporada){
+        return temporadaService.findByTituloSerieAndNumeroTemporada(titulo, numeroTemporada);
     }
 
 }
