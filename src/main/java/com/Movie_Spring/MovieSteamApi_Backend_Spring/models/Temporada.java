@@ -33,6 +33,12 @@ public class Temporada {
     @OneToMany(mappedBy = "temporada", cascade = CascadeType.ALL)
     private List<Episodio> episodios;
 
+    @Column(name = "video_key")
+    private String videoKey;
+
+    @Column(name = "titulo_video")
+    private String tituloVideo;
+
     public Temporada() {
     }
 
@@ -45,6 +51,14 @@ public class Temporada {
         this.posterTemporada = temporadaDto.posterTemporada();
         this.numeroTemporada = temporadaDto.numeroTemporada();
         this.promedioTemporada = temporadaDto.promedioTemporada();
+        // Verificar si el video no es null antes de acceder a sus métodos
+        if (temporadaDto.video() != null) {
+            this.videoKey = temporadaDto.video().videoKey();
+            this.tituloVideo = temporadaDto.video().tituloVideo();
+        } else {
+            this.videoKey = null;
+            this.tituloVideo = null;
+        }
 
     }
 }

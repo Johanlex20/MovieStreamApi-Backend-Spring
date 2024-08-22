@@ -3,10 +3,7 @@ import com.Movie_Spring.MovieSteamApi_Backend_Spring.Services.iServices.iSerieSe
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Episodio;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Serie;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Temporada;
-import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.recordConsumoApi.EpisodioDto;
-import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.recordConsumoApi.NombreSerieDto;
-import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.recordConsumoApi.SerieDto;
-import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.recordConsumoApi.TemporadaDto;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.recordConsumoApi.*;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.serie.SerieActualizarDTO;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.serie.SerieDBDto;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.repository.iEpisodioRepository;
@@ -70,6 +67,12 @@ public class SerieService implements iSerieService {
                 Temporada temporada = new Temporada(temporadaDto);
                 temporada.setTituloSerie(serie.getTitulo());
                 temporada.setSerie(serie);
+
+                VideoDto videoDto = apiService.obtenerVideoTemporada(serieDto.idSerie(), i);
+                if (videoDto != null){
+                    temporada.setVideoKey(videoDto.videoKey());
+                    temporada.setTituloVideo(videoDto.tituloVideo());
+                }
                 temporadas.add(temporada);
             }
             temporadaRepository.saveAll(temporadas);

@@ -14,6 +14,7 @@ public record TemporadaDto(
         @JsonAlias("poster_path") String posterTemporada,
         @JsonAlias("season_number") Integer numeroTemporada,
         @JsonAlias("vote_average") Double promedioTemporada,
-        @JsonAlias("episodes") List<EpisodioDto> episodios
+        @JsonAlias("episodes") List<EpisodioDto> episodios,
+        @JsonAlias("video") VideoDto video
 
 ) {}
