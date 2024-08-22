@@ -60,23 +60,13 @@ public class SerieService implements iSerieService {
         SerieDto serieDto = apiService.obtenerDatosSerie(nombreSerie);
 
         if (serieDto != null){
-            SerieDto serieNew = new SerieDto(
-                    serieDto.idSerie(),
-                    serieDto.titulo(),
-                    serieDto.sinopsis(),
-                    serieDto.poster(),
-                    serieDto.popularidad(),
-                    serieDto.numTemporadas(),
-                    serieDto.numEpisodiosTotal(),
-                    serieDto.genero());
-            Serie serie = new Serie(serieNew);
+            Serie serie = new Serie(serieDto);
             serie.setCreatedAt(LocalDateTime.now());
             serie = serieRepository.save(serie);  //Hasta aqui guardamos los datos de la serie
 
-
             List<Temporada> temporadas = new ArrayList<>();
             for (int i = 1; i <= serieDto.numTemporadas(); i++){
-                TemporadaDto temporadaDto = apiService.obtenerDatosTemporada(serieNew.idSerie(), i);
+                TemporadaDto temporadaDto = apiService.obtenerDatosTemporada(serieDto.idSerie(), i);
                 Temporada temporada = new Temporada(temporadaDto);
                 temporada.setTituloSerie(serie.getTitulo());
                 temporada.setSerie(serie);
@@ -86,7 +76,7 @@ public class SerieService implements iSerieService {
 
             for (Temporada temporada : temporadas){
                 List<Episodio> episodios = new ArrayList<>();
-                TemporadaDto temporadaDto = apiService.obtenerDatosTemporada(serieNew.idSerie(), temporada.getNumeroTemporada());
+                TemporadaDto temporadaDto = apiService.obtenerDatosTemporada(serieDto.idSerie(), temporada.getNumeroTemporada());
 
                 for (EpisodioDto episodioDto : temporadaDto.episodios()){
                     Episodio episodio = new Episodio(episodioDto);
@@ -102,7 +92,6 @@ public class SerieService implements iSerieService {
         }else {
             return null;
         }
-
     }
 
     @Override

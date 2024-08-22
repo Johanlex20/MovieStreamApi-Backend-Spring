@@ -3,6 +3,8 @@ import com.Movie_Spring.MovieSteamApi_Backend_Spring.configuration.ConsumoApiMov
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.DatoApi;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.recordConsumoApi.SerieDto;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.recordConsumoApi.TemporadaDto;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.recordConsumoApi.VideoDto;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.recordConsumoApi.VideoRespuesta;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,11 +26,36 @@ public class ApiService {
         //OBTENER SOLO EL PRIMER RESLUTADO DEL GRUPO DE DATOS VERIFICAMOS QUE NO SEA NULL Y NO ESTE VACIO, ESTA PARTE SE DEBE HACER PARA OBTENER EL ID DE LA SERIE YA QUE CON ESTE VAMOS A OBTENER MAS DATOS CON OTRO URL
         if (datos.getResultado() != null && !datos.getResultado().isEmpty()){
             SerieDto primerDato = datos.getResultado().get(0);
+
             json = consumoApiMovieDB.obtenerDatosApi(API_BASE +"tv/" + primerDato.idSerie() + "?" + API_IDIOMA_ES);
-            return convertirDatos.convertirDatos(json, SerieDto.class);
+            SerieDto serieDetalles = convertirDatos.convertirDatos(json, SerieDto.class);
+
+            //OBJETO VIDEO SEGUN ID
+            VideoDto videoDto = obtenerVideoSerie(primerDato.idSerie());
+
+            // Actualizar SerieDto con video
+            return new SerieDto(
+                    serieDetalles.idSerie(),
+                    serieDetalles.titulo(),
+                    serieDetalles.sinopsis(),
+                    serieDetalles.poster(),
+                    serieDetalles.popularidad(),
+                    serieDetalles.numTemporadas(),
+                    serieDetalles.numEpisodiosTotal(),
+                    serieDetalles.genero(),
+                    videoDto
+            );
         }
         return null;
     }
+
+    //OBTENER VIDEO PARA EL OBJETO SERIE
+    public VideoDto obtenerVideoSerie(Long idSerie){
+        String videoJson = consumoApiMovieDB.obtenerDatosApi(API_BASE + "/tv/" + idSerie + "/videos?" + API_IDIOMA_ES);
+        VideoRespuesta videoRespuesta = convertirDatos.convertirDatos(videoJson, VideoRespuesta.class);
+        return videoRespuesta.results().get(0);
+    }
+
 
     public TemporadaDto obtenerDatosTemporada(Long idSerie, int numeroTemporada){
         String json = consumoApiMovieDB.obtenerDatosApi(API_BASE + "tv/" + idSerie + "/season/" + numeroTemporada + "?" + API_IDIOMA_ES);
