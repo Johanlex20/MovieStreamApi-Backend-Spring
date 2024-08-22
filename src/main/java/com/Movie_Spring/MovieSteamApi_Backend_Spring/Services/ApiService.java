@@ -51,9 +51,18 @@ public class ApiService {
 
     //OBTENER VIDEO PARA EL OBJETO SERIE
     public VideoDto obtenerVideoSerie(Long idSerie){
-        String videoJson = consumoApiMovieDB.obtenerDatosApi(API_BASE + "/tv/" + idSerie + "/videos?" + API_IDIOMA_ES);
+        String videoJson = consumoApiMovieDB.obtenerDatosApi(API_BASE + "tv/" + idSerie + "/videos?" + API_IDIOMA_ES);
+        System.out.println("videoJson = " + videoJson);
+        System.out.println("idSerie = " + idSerie);
         VideoRespuesta videoRespuesta = convertirDatos.convertirDatos(videoJson, VideoRespuesta.class);
-        return videoRespuesta.results().get(0);
+        System.out.println("videoRespuesta = " + videoRespuesta);
+
+        if (videoRespuesta.results() != null && !videoRespuesta.results().isEmpty()){
+            return videoRespuesta.results().get(0);
+        }
+        return new VideoDto(
+                null,null
+        );
     }
 
 
