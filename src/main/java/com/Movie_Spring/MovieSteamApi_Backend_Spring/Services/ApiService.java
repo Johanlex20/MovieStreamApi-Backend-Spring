@@ -1,10 +1,7 @@
 package com.Movie_Spring.MovieSteamApi_Backend_Spring.Services;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.configuration.ConsumoApiMovieDB;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.DatoApi;
-import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.recordConsumoApi.SerieDto;
-import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.recordConsumoApi.TemporadaDto;
-import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.recordConsumoApi.VideoDto;
-import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.recordConsumoApi.VideoRespuesta;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.recordConsumoApi.*;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -72,7 +69,7 @@ public class ApiService {
     public VideoDto obtenerVideoTemporada(Long idSerie, Integer numeroTemporada){
         String videoJson = consumoApiMovieDB.obtenerDatosApi(API_BASE + "tv/" + idSerie + "/season/" + numeroTemporada + "/videos");
         VideoRespuesta videoRespuesta = convertirDatos.convertirDatos(videoJson, VideoRespuesta.class);
-        System.out.println("videoRespuesta = " + videoRespuesta);
+        //System.out.println("videoRespuesta = " + videoRespuesta);
 
         if (videoRespuesta.results() != null && !videoRespuesta.results().isEmpty()) {
             return videoRespuesta.results().get(0); // Devuelve el primer video
@@ -81,8 +78,13 @@ public class ApiService {
         }
     }
 
-//    public EpisodioDto obtenerDatosEpisodio(Long idSerie, int numeroTemporada, int numeroEpisodio){
-//        String json = consumoApiMovieDB.obtenerDatosApi(API_BASE + "tv/" + idSerie + "/season/" + numeroTemporada + "/episode/" + numeroEpisodio + "?" + API_IDIOMA_ES);
-//        return convertirDatos.convertirDatos(json, EpisodioDto.class);
-//    }
+    public VideoDto obtenerVideoEpisodio(Long idSerie, int numeroTemporada, int numeroEpisodio){
+        String json = consumoApiMovieDB.obtenerDatosApi(API_BASE + "tv/" + idSerie + "/season/" + numeroTemporada + "/episode/" + numeroEpisodio + "/videos");
+        VideoRespuesta videoRespuesta = convertirDatos.convertirDatos(json, VideoRespuesta.class);
+        if (videoRespuesta.results() != null && !videoRespuesta.results().isEmpty()) {
+            return videoRespuesta.results().get(0); // Devuelve el primer video
+        } else {
+            return new VideoDto(null,null); // No hay videos disponibles
+        }
+    }
 }

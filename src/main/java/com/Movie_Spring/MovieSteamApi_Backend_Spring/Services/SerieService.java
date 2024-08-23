@@ -85,6 +85,12 @@ public class SerieService implements iSerieService {
                     Episodio episodio = new Episodio(episodioDto);
                     episodio.setTemporada(temporada);
                     episodio.setTituloSerie(serie.getTitulo());
+
+                    VideoDto videoDto = apiService.obtenerVideoEpisodio(serieDto.idSerie(), temporada.getNumeroTemporada(), episodio.getNumEpisodio());
+                    if (videoDto != null){
+                        episodio.setVideoKey(videoDto.videoKey());
+                        episodio.setTituloVideo(videoDto.tituloVideo());
+                    }
                     episodios.add(episodio);
                 }
                 episodioRepository.saveAll(episodios);

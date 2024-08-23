@@ -29,6 +29,12 @@ public class Episodio {
     private Temporada temporada;
     private String tituloSerie;
 
+    @Column(name = "video_key")
+    private String videoKey;
+
+    @Column(name = "titulo_video")
+    private String tituloVideo;
+
 
     public Episodio() {
     }
@@ -42,5 +48,12 @@ public class Episodio {
         this.numTemporada = episodioDto.numTemporada();
         this.portadaEpisodio = episodioDto.portadaEpisodio();
         this.promedio = episodioDto.promedio();
+        if (episodioDto.video() != null) {
+            this.videoKey = episodioDto.video().videoKey();
+            this.tituloVideo = episodioDto.video().tituloVideo();
+        } else {
+            this.videoKey = null;
+            this.tituloVideo = null;
+        }
     }
 }
