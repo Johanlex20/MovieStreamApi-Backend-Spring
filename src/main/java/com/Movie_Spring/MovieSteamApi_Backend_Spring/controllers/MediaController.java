@@ -20,4 +20,10 @@ public class MediaController {
         return new RedirectView(img);
     }
 
+    @GetMapping(value = "/video")
+    public RedirectView getVideoUrl(@RequestParam String videoKey){
+        String video = mediaService.cargarVideo(videoKey);
+        return new RedirectView(video);
+    }
+
 }
