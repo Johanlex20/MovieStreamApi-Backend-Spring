@@ -1,6 +1,7 @@
 package com.Movie_Spring.MovieSteamApi_Backend_Spring.Services;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.Services.iServices.iSerieService;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Episodio;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Genero;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Serie;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Temporada;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.recordConsumoApi.*;
@@ -135,5 +136,9 @@ public class SerieService implements iSerieService {
         serieDBDto.setNumEpisodiosTotal(serie.getNumEpisodiosTotal());
         serieDBDto.setGenero(serie.getGenero());
         return serieDBDto;
+    }
+
+    public List<Serie> findGenero(Genero genero){
+        return serieRepository.findByGenero(genero);
     }
 }
