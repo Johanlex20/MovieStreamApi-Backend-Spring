@@ -56,7 +56,7 @@ public class SerieController {
     }
 
     @GetMapping("/genero")
-    public List<Serie> findGenero(@RequestParam(value = "genero") Genero genero){
+    public List<SerieDBDto> findGenero(@RequestParam(value = "genero") Genero genero){
        return serieService.findGenero(genero);
     }
 }

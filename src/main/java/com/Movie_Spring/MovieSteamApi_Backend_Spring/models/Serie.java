@@ -75,4 +75,5 @@ public class Serie {
         this.videoKey = serieDto.video().videoKey();
 
     }
+
 }

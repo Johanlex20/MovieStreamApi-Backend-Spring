@@ -138,7 +138,21 @@ public class SerieService implements iSerieService {
         return serieDBDto;
     }
 
-    public List<Serie> findGenero(Genero genero){
-        return serieRepository.findByGenero(genero);
+    public List<SerieDBDto> findGenero(Genero genero){
+        return serieRepository.findByGenero(genero)
+                .stream()
+                .map(serie -> new SerieDBDto(
+                        serie.getId(),
+                        serie.getIdSerie(),
+                        serie.getTitulo(),
+                        /*serie.getSinopsis(),*/
+                        serie.getPoster(),
+                        serie.getPopularidad(),
+                        serie.getNumTemporadas(),
+                        serie.getNumEpisodiosTotal(),
+                        serie.getGenero(),
+                        serie.getVideoKey()
+                )).collect(Collectors.toList());
+
     }
 }
