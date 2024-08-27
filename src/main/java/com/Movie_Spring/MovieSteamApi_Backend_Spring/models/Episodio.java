@@ -17,7 +17,7 @@ public class Episodio {
     private String tituloEpisodio;
     private String fechaEstreno;
 
-    @Column(length = 5000)
+    @Column(length = 50000)
     private String sinopsisEpisodio;
     private Integer idEpisodio;
     private Integer numTemporada;

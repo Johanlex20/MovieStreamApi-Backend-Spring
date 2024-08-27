@@ -18,7 +18,7 @@ public class Temporada {
     private String nombreTemporada;
     private String fechaEstrenoTemporada;
 
-    @Column(length = 5000)
+    @Column(length = 50000)
     private String sinopsisTemporada;
     private String posterTemporada;
     private Integer numeroTemporada;

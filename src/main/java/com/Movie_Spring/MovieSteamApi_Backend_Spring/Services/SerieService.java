@@ -1,5 +1,9 @@
 package com.Movie_Spring.MovieSteamApi_Backend_Spring.Services;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.Services.iServices.iSerieService;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.exceptions.BadRequestException;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.exceptions.DataBaseException;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.exceptions.ExternalServiceException;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.exceptions.ResourceNotFoundException;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Episodio;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Genero;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Serie;
@@ -16,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -55,53 +60,83 @@ public class SerieService implements iSerieService {
 
     public Serie guardarSerie(NombreSerieDto nombreSerieDto){
         String nombreSerie = nombreSerieDto.nombreSerie();
-        SerieDto serieDto = apiService.obtenerDatosSerie(nombreSerie);
 
-        if (serieDto != null){
-            Serie serie = new Serie(serieDto);
-            serie.setCreatedAt(LocalDateTime.now());
+        if (serieRepository.existsByTitulo(nombreSerie)){
+          throw new BadRequestException("La Serie ya existe!");
+        }
+
+        SerieDto serieDto;
+        try {
+            serieDto = apiService.obtenerDatosSerie(nombreSerie);
+        } catch (Exception e){
+            throw new ExternalServiceException("Error al obtener los datos de la api externa" , e);
+        }
+
+        if (serieDto == null) {
+            throw new ResourceNotFoundException("Serie no encontrada!");
+        }
+
+        Serie serie = new Serie(serieDto);
+        serie.setCreatedAt(LocalDateTime.now());
+
+        try {
             serie = serieRepository.save(serie);  //Hasta aqui guardamos los datos de la serie
+        }catch (Exception e){
+            throw new DataBaseException("Error al guardar la serie en la base de datos!" , e);
+        }
 
-            List<Temporada> temporadas = new ArrayList<>();
+        List<Temporada> temporadas = new ArrayList<>();
+        try{
             for (int i = 1; i <= serieDto.numTemporadas(); i++){
                 TemporadaDto temporadaDto = apiService.obtenerDatosTemporada(serieDto.idSerie(), i);
                 Temporada temporada = new Temporada(temporadaDto);
                 temporada.setTituloSerie(serie.getTitulo());
                 temporada.setSerie(serie);
 
-                VideoDto videoDto = apiService.obtenerVideoTemporada(serieDto.idSerie(), i);
-                if (videoDto != null){
+//              VideoDto videoDto = apiService.obtenerVideoTemporada(serieDto.idSerie(), i);
+//              if (videoDto != null){
+//                  temporada.setVideoKey(videoDto.videoKey());
+//                  temporada.setTituloVideo(videoDto.tituloVideo());
+//              }
+
+                Optional.ofNullable(apiService.obtenerVideoTemporada(serieDto.idSerie(), i)).ifPresent(videoDto -> {
                     temporada.setVideoKey(videoDto.videoKey());
                     temporada.setTituloVideo(videoDto.tituloVideo());
-                }
+                });
                 temporadas.add(temporada);
             }
-            temporadaRepository.saveAll(temporadas);
-
-            for (Temporada temporada : temporadas){
-                List<Episodio> episodios = new ArrayList<>();
-                TemporadaDto temporadaDto = apiService.obtenerDatosTemporada(serieDto.idSerie(), temporada.getNumeroTemporada());
-
-                for (EpisodioDto episodioDto : temporadaDto.episodios()){
-                    Episodio episodio = new Episodio(episodioDto);
-                    episodio.setTemporada(temporada);
-                    episodio.setTituloSerie(serie.getTitulo());
-
-                    VideoDto videoDto = apiService.obtenerVideoEpisodio(serieDto.idSerie(), temporada.getNumeroTemporada(), episodio.getNumEpisodio());
-                    if (videoDto != null){
-                        episodio.setVideoKey(videoDto.videoKey());
-                        episodio.setTituloVideo(videoDto.tituloVideo());
-                    }
-                    episodios.add(episodio);
-                }
-                episodioRepository.saveAll(episodios);
-                temporada.setEpisodios(episodios);
+                temporadaRepository.saveAll(temporadas);
+            }catch (Exception e){
+                throw new ExternalServiceException("Error al obtner daots de temporada o al guardarlos", e);
             }
+
+            try {
+                for (Temporada temporada : temporadas){
+                    List<Episodio> episodios = new ArrayList<>();
+                    TemporadaDto temporadaDto = apiService.obtenerDatosTemporada(serieDto.idSerie(), temporada.getNumeroTemporada());
+
+                    for (EpisodioDto episodioDto : temporadaDto.episodios()){
+                        Episodio episodio = new Episodio(episodioDto);
+                        episodio.setTemporada(temporada);
+                        episodio.setTituloSerie(serie.getTitulo());
+
+                        VideoDto videoDto = apiService.obtenerVideoEpisodio(serieDto.idSerie(), temporada.getNumeroTemporada(), episodio.getNumEpisodio());
+                        if (videoDto != null){
+                            episodio.setVideoKey(videoDto.videoKey());
+                            episodio.setTituloVideo(videoDto.tituloVideo());
+                        }
+                        episodios.add(episodio);
+                    }
+                    episodioRepository.saveAll(episodios);
+                    temporada.setEpisodios(episodios);
+                }
+
+            }catch (Exception e){
+                throw new ExternalServiceException("Error al obtener datos de episodios o al guardarlos.", e);
+            }
+
             return serieRepository.save(serie);
 
-        }else {
-            return null;
-        }
     }
 
     @Override
@@ -153,6 +188,7 @@ public class SerieService implements iSerieService {
                         serie.getGenero(),
                         serie.getVideoKey()
                 )).collect(Collectors.toList());
-
     }
+
+
 }

@@ -19,7 +19,7 @@ public class Serie {
     @Column(unique = true)
     private String titulo;
 
-    @Column(length = 5000)
+    @Column(length = 50000)
     private String sinopsis;
 
     private String poster;

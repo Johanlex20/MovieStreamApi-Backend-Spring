@@ -8,4 +8,6 @@ import java.util.List;
 public interface iSerieRepository extends JpaRepository<Serie,Long> {
 
     List<Serie> findByGenero (@Param("genero") Genero genero);
+
+    boolean existsByTitulo(String titulo);
 }
