@@ -3,6 +3,8 @@ import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.recordConsumoAp
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.recordConsumoApi.SerieDto;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -49,6 +51,8 @@ public class Serie {
     @Column(name = "titulo_video")
     private String tituloVideo;
 
+    private LocalDate fechaLanzamientoSerie;
+
     public Serie() {
     }
 
@@ -73,6 +77,7 @@ public class Serie {
                     }).orElse(null);
         this.tituloVideo = serieDto.video().tituloVideo();
         this.videoKey = serieDto.video().videoKey();
+        this.fechaLanzamientoSerie = LocalDate.parse(serieDto.fechaLanzamientoSerie());
 
     }
 

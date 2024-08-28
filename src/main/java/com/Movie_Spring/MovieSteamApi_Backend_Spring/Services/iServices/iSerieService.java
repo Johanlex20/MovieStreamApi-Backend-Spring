@@ -16,4 +16,5 @@ public interface iSerieService {
     SerieDBDto actualizarSerie(Long id, SerieActualizarDTO serieActualizarDTO);
     Boolean eliminarSerie(Long id);
     List<SerieDBDto> findGenero(Genero genero);
+
 }

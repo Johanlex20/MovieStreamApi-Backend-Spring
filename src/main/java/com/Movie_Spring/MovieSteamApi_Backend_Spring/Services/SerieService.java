@@ -186,7 +186,8 @@ public class SerieService implements iSerieService {
                         serie.getNumTemporadas(),
                         serie.getNumEpisodiosTotal(),
                         serie.getGenero(),
-                        serie.getVideoKey()
+                        serie.getVideoKey(),
+                        serie.getFechaLanzamientoSerie()
                 )).collect(Collectors.toList());
     }
 

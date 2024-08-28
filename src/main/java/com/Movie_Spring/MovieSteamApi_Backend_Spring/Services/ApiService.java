@@ -40,7 +40,8 @@ public class ApiService {
                     serieDetalles.numTemporadas(),
                     serieDetalles.numEpisodiosTotal(),
                     serieDetalles.genero(),
-                    videoDto
+                    videoDto,
+                    serieDetalles.fechaLanzamientoSerie()
             );
         }
         return null;
