@@ -14,5 +14,6 @@ public record SerieDto(
         @JsonAlias("number_of_episodes") Integer numEpisodiosTotal,
         @JsonAlias("genres") List<GeneroDto> genero,
         @JsonAlias("video") VideoDto video,
-        @JsonAlias("first_air_date") String fechaLanzamientoSerie
+        @JsonAlias("first_air_date") String fechaLanzamientoSerie,
+        @JsonAlias("networks") List<PlataformaVideoDto> plataforma
 ) {}

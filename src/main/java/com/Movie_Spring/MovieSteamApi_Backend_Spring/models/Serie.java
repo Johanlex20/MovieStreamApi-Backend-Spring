@@ -1,9 +1,9 @@
 package com.Movie_Spring.MovieSteamApi_Backend_Spring.models;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.recordConsumoApi.GeneroDto;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.recordConsumoApi.PlataformaVideoDto;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.recordConsumoApi.SerieDto;
 import jakarta.persistence.*;
 import lombok.Data;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -38,7 +38,6 @@ public class Serie {
     @OneToMany(mappedBy = "serie", cascade = CascadeType.ALL)
     private List<Temporada> temporadas;
 
-
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
@@ -52,6 +51,8 @@ public class Serie {
     private String tituloVideo;
 
     private LocalDate fechaLanzamientoSerie;
+
+    private String plataforma;
 
     public Serie() {
     }
@@ -78,7 +79,10 @@ public class Serie {
         this.tituloVideo = serieDto.video().tituloVideo();
         this.videoKey = serieDto.video().videoKey();
         this.fechaLanzamientoSerie = LocalDate.parse(serieDto.fechaLanzamientoSerie());
-
+        this.plataforma = serieDto.plataforma()
+                .stream()
+                .map(PlataformaVideoDto::plataforma)
+                .findFirst().orElse(null);
     }
 
 }

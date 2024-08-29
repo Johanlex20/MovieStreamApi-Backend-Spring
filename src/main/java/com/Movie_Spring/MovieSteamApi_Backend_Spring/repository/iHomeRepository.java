@@ -12,5 +12,7 @@ public interface iHomeRepository extends JpaRepository<Serie,Long> {
     @Query("SELECT e FROM Serie e WHERE e.fechaLanzamientoSerie BETWEEN :startDate AND :endDate")
     List<Serie> findByYear(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
+    List<Serie> findByPlataforma(@Param("plataforma") String plataforma);
+
 
 }

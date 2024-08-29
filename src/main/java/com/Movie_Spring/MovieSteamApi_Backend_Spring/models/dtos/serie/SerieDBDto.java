@@ -33,10 +33,12 @@ public class SerieDBDto {
 
     private LocalDate fechaLanzamientoSerie;
 
+    private String plataforma;
+
     public SerieDBDto() {
     }
 
-    public SerieDBDto(Long id, Long idSerie, String titulo, /*Stringsinopsis,*/  String poster, Double popularidad, Integer numTemporadas, Integer numEpisodiosTotal, Genero genero, String videoKey,LocalDate fechaLanzamientoSerie) {
+    public SerieDBDto(Long id, Long idSerie, String titulo, /*Stringsinopsis,*/  String poster, Double popularidad, Integer numTemporadas, Integer numEpisodiosTotal, Genero genero, String videoKey,String tituloVideo, LocalDate fechaLanzamientoSerie, String plataforma) {
         this.id = id;
         this.idSerie = idSerie;
         this.titulo = titulo;
@@ -47,7 +49,9 @@ public class SerieDBDto {
         this.numEpisodiosTotal = numEpisodiosTotal;
         this.genero = genero;
         this.videoKey = videoKey;
+        this.tituloVideo =tituloVideo;
         this.fechaLanzamientoSerie = fechaLanzamientoSerie;
+        this.plataforma = plataforma;
 
     }
 
@@ -62,7 +66,9 @@ public class SerieDBDto {
         this.numEpisodiosTotal = serie.getNumEpisodiosTotal();
         this.genero = serie.getGenero();
         this.videoKey = serie.getVideoKey();
+        this.tituloVideo = serie.getTituloVideo();
         this.fechaLanzamientoSerie = serie.getFechaLanzamientoSerie();
+        this.plataforma = serie.getPlataforma();
     }
 
 

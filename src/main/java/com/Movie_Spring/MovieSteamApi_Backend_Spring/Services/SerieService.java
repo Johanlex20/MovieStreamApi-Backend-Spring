@@ -172,6 +172,10 @@ public class SerieService implements iSerieService {
         serieDBDto.setNumTemporadas(serie.getNumTemporadas());
         serieDBDto.setNumEpisodiosTotal(serie.getNumEpisodiosTotal());
         serieDBDto.setGenero(serie.getGenero());
+        serieDBDto.setVideoKey(serie.getVideoKey());
+        serieDBDto.setTituloVideo(serie.getTituloVideo());
+        serieDBDto.setFechaLanzamientoSerie(serie.getFechaLanzamientoSerie());
+        serieDBDto.setPlataforma(serie.getPlataforma());
         return serieDBDto;
     }
 }

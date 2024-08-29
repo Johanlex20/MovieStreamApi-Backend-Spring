@@ -15,7 +15,6 @@ public class ApiService {
     public SerieDto obtenerDatosSerie(String nombreSerie){
         //OBTNER LOS DATOS TAL CUAL LLEGAN DEL API EXTERNA
         String json = consumoApiMovieDB.obtenerDatosApi(API_BASE + "search/tv?query=" + nombreSerie.replace(" ", "%20") +"&include_adult=false&"+ API_IDIOMA_ES);
-
         //CONVERTIR LOS DATOS EXTERNOS A DATOS JAVA
         DatoApi datos = convertirDatos.convertirDatos(json, DatoApi.class);
 
@@ -23,10 +22,8 @@ public class ApiService {
         //OBTENER SOLO EL PRIMER RESLUTADO DEL GRUPO DE DATOS VERIFICAMOS QUE NO SEA NULL Y NO ESTE VACIO, ESTA PARTE SE DEBE HACER PARA OBTENER EL ID DE LA SERIE YA QUE CON ESTE VAMOS A OBTENER MAS DATOS CON OTRO URL
         if (datos.getResultado() != null && !datos.getResultado().isEmpty()){
             SerieDto primerDato = datos.getResultado().get(0);
-
             json = consumoApiMovieDB.obtenerDatosApi(API_BASE +"tv/" + primerDato.idSerie() + "?" + API_IDIOMA_ES);
             SerieDto serieDetalles = convertirDatos.convertirDatos(json, SerieDto.class);
-
             //OBJETO VIDEO SEGUN ID
             VideoDto videoDto = obtenerVideoSerie(primerDato.idSerie());
 
@@ -41,7 +38,8 @@ public class ApiService {
                     serieDetalles.numEpisodiosTotal(),
                     serieDetalles.genero(),
                     videoDto,
-                    serieDetalles.fechaLanzamientoSerie()
+                    serieDetalles.fechaLanzamientoSerie(),
+                    serieDetalles.plataforma()
             );
         }
         return null;

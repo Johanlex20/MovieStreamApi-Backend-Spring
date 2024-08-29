@@ -19,4 +19,10 @@ public class HomeController {
         return homeService.findByYear(year);
     }
 
+    @GetMapping(value = "/series/plataforma")
+    public List<SerieDBDto> getSerieByPlataforma(@RequestParam String plataforma){
+        return homeService.findByPlataforma(plataforma);
+    }
+
+
 }

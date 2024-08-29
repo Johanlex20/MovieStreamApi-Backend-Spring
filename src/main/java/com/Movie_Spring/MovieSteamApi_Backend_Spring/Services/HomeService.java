@@ -42,8 +42,30 @@ public class HomeService implements iHomeService {
                         serie.getNumTemporadas(),
                         serie.getNumEpisodiosTotal(),
                         serie.getGenero(),
+                        serie.getTituloVideo(),
                         serie.getVideoKey(),
-                        serie.getFechaLanzamientoSerie()
+                        serie.getFechaLanzamientoSerie(),
+                        serie.getPlataforma()
+                )).collect(Collectors.toList());
+    }
+
+    public List<SerieDBDto> findByPlataforma(String plataforma){
+        return homeRepository.findByPlataforma(plataforma)
+                .stream()
+                .map(serie -> new SerieDBDto(
+                        serie.getId(),
+                        serie.getIdSerie(),
+                        serie.getTitulo(),
+                        /*serie.getSinopsis(),*/
+                        serie.getPoster(),
+                        serie.getPopularidad(),
+                        serie.getNumTemporadas(),
+                        serie.getNumEpisodiosTotal(),
+                        serie.getGenero(),
+                        serie.getTituloVideo(),
+                        serie.getVideoKey(),
+                        serie.getFechaLanzamientoSerie(),
+                        serie.getPlataforma()
                 )).collect(Collectors.toList());
     }
 
