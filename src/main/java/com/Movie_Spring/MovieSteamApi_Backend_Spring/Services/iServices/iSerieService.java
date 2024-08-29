@@ -1,5 +1,4 @@
 package com.Movie_Spring.MovieSteamApi_Backend_Spring.Services.iServices;
-import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Genero;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Serie;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.recordConsumoApi.NombreSerieDto;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.serie.SerieActualizarDTO;
@@ -15,6 +14,5 @@ public interface iSerieService {
     Serie guardarSerie(NombreSerieDto nombreSerieDto);
     SerieDBDto actualizarSerie(Long id, SerieActualizarDTO serieActualizarDTO);
     Boolean eliminarSerie(Long id);
-    List<SerieDBDto> findGenero(Genero genero);
 
 }

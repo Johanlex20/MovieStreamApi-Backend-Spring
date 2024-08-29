@@ -1,5 +1,6 @@
 package com.Movie_Spring.MovieSteamApi_Backend_Spring.controllers;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.Services.SerieService;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.Services.iServices.iHomeService;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.Services.iServices.iSerieService;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Genero;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Serie;
@@ -20,6 +21,9 @@ public class SerieController {
 
     @Autowired
     private iSerieService serieService;
+
+    @Autowired
+    private iHomeService homeService;
 
     public SerieController(SerieService serieService) {
         this.serieService = serieService;
@@ -57,6 +61,6 @@ public class SerieController {
 
     @GetMapping("/genero")
     public List<SerieDBDto> findGenero(@RequestParam(value = "genero") Genero genero){
-       return serieService.findGenero(genero);
+       return homeService.findGenero(genero);
     }
 }

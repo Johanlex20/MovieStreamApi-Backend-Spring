@@ -1,7 +1,9 @@
 package com.Movie_Spring.MovieSteamApi_Backend_Spring.Services;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.Services.iServices.iHomeService;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Genero;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.serie.SerieDBDto;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.repository.iHomeRepository;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.repository.iSerieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
@@ -14,6 +16,9 @@ public class HomeService implements iHomeService {
     @Autowired
     private iHomeRepository homeRepository;
 
+    @Autowired
+    private iSerieRepository serieRepository;
+
     @Override
     public List<SerieDBDto> findByYear(int year) {
         LocalDate startDate = LocalDate.of(year, 1, 1); // Primer día del año
@@ -22,6 +27,24 @@ public class HomeService implements iHomeService {
                 .stream()
                 .map(SerieDBDto::new)
                 .collect(Collectors.toList());
+    }
+
+    public List<SerieDBDto> findGenero(Genero genero){
+        return serieRepository.findByGenero(genero)
+                .stream()
+                .map(serie -> new SerieDBDto(
+                        serie.getId(),
+                        serie.getIdSerie(),
+                        serie.getTitulo(),
+                        /*serie.getSinopsis(),*/
+                        serie.getPoster(),
+                        serie.getPopularidad(),
+                        serie.getNumTemporadas(),
+                        serie.getNumEpisodiosTotal(),
+                        serie.getGenero(),
+                        serie.getVideoKey(),
+                        serie.getFechaLanzamientoSerie()
+                )).collect(Collectors.toList());
     }
 
 }

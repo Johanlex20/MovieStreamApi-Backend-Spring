@@ -5,7 +5,6 @@ import com.Movie_Spring.MovieSteamApi_Backend_Spring.exceptions.DataBaseExceptio
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.exceptions.ExternalServiceException;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.exceptions.ResourceNotFoundException;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Episodio;
-import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Genero;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Serie;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Temporada;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.recordConsumoApi.*;
@@ -54,7 +53,7 @@ public class SerieService implements iSerieService {
 
     @Override
     public SerieDBDto findById(Long id) {
-        Serie serie = serieRepository.findById(id).orElseThrow(()-> new RuntimeException("Serie ID: "+id+" No encontrada"));
+        Serie serie = serieRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Serie ID: "+id+" No encontrada"));
         return convertirSerieDtoAObjeto(serie);
     }
 
@@ -134,15 +133,13 @@ public class SerieService implements iSerieService {
             }catch (Exception e){
                 throw new ExternalServiceException("Error al obtener datos de episodios o al guardarlos.", e);
             }
-
             return serieRepository.save(serie);
-
     }
 
     @Override
     public SerieDBDto actualizarSerie(Long id, SerieActualizarDTO serieActualizarDTO) {
 
-        Serie serie = serieRepository.findById(id).orElseThrow(()->new RuntimeException("Serie no encontrada con Id: " + id));
+        Serie serie = serieRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Serie no encontrada con Id: " + id));
 
         serie.setTitulo(serieActualizarDTO.getTitulo());
         serie.setSinopsis(serieActualizarDTO.getSinopsis());
@@ -155,7 +152,12 @@ public class SerieService implements iSerieService {
 
     @Override
     public Boolean eliminarSerie(Long id) {
-        serieRepository.deleteById(id);
+        boolean serieId = serieRepository.existsById(id);
+        if (serieId){
+            serieRepository.deleteById(id);
+        }else {
+            throw new ResourceNotFoundException("Serie no encontrada con Id: " + id);
+        }
         return true;
     }
 
@@ -172,24 +174,4 @@ public class SerieService implements iSerieService {
         serieDBDto.setGenero(serie.getGenero());
         return serieDBDto;
     }
-
-    public List<SerieDBDto> findGenero(Genero genero){
-        return serieRepository.findByGenero(genero)
-                .stream()
-                .map(serie -> new SerieDBDto(
-                        serie.getId(),
-                        serie.getIdSerie(),
-                        serie.getTitulo(),
-                        /*serie.getSinopsis(),*/
-                        serie.getPoster(),
-                        serie.getPopularidad(),
-                        serie.getNumTemporadas(),
-                        serie.getNumEpisodiosTotal(),
-                        serie.getGenero(),
-                        serie.getVideoKey(),
-                        serie.getFechaLanzamientoSerie()
-                )).collect(Collectors.toList());
-    }
-
-
 }
