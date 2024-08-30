@@ -1,11 +1,15 @@
 package com.Movie_Spring.MovieSteamApi_Backend_Spring.controllers;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.Services.iServices.iUsuarioService;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Usuario;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.usuario.UsuarioDto;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.usuario.UsuarioRegistroDto;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -32,13 +36,13 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public Usuario save(@RequestBody Usuario usuario){
-        return usuarioService.save(usuario);
+    public UsuarioDto save(@RequestBody @Valid UsuarioRegistroDto usuarioRegistroDto){
+        return usuarioService.save(usuarioRegistroDto);
     }
 
     @PutMapping(value = "/{id}")
-    public Usuario update(@PathVariable(value = "id") Long id,@RequestBody Usuario usuario){
-        return usuarioService.update(id, usuario);
+    public UsuarioDto update(@PathVariable(value = "id") Long id,@RequestBody @Valid UsuarioRegistroDto usuarioRegistroDto){
+        return usuarioService.update(id, usuarioRegistroDto);
     }
 
     @DeleteMapping(value = "/{id}")

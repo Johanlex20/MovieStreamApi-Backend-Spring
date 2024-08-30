@@ -3,6 +3,7 @@ import com.Movie_Spring.MovieSteamApi_Backend_Spring.exceptions.BadRequestExcept
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.exceptions.DataBaseException;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.exceptions.ExternalServiceException;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.exceptions.ResourceNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
@@ -17,6 +18,7 @@ import java.util.*;
 @RestControllerAdvice
 public class RestHandlerException {
 
+    @Autowired
     private MessageSource messageSource;
 
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)

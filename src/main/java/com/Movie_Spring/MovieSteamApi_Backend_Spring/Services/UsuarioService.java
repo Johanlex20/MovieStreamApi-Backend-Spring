@@ -1,18 +1,23 @@
 package com.Movie_Spring.MovieSteamApi_Backend_Spring.Services;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.Services.iServices.iUsuarioService;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.exceptions.BadRequestException;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.exceptions.ResourceNotFoundException;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Usuario;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.usuario.UsuarioDto;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.usuario.UsuarioRegistroDto;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.repository.iUsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.util.List;
 
 @Service
 public class UsuarioService implements iUsuarioService {
+
+    String foto = "dummyactualizado.jpg";
 
     @Autowired
     private iUsuarioRepository usuarioRepository;
@@ -33,44 +38,84 @@ public class UsuarioService implements iUsuarioService {
     }
 
     @Override
-    public Usuario save(Usuario usuario) {
+    public UsuarioDto save(UsuarioRegistroDto usuarioRegistroDto) {
 
-        String foto = "dummy.jpg";
+        boolean usuarioExists = usuarioRepository.existsByEmail(usuarioRegistroDto.getEmail());
 
-        Usuario usuarioNew = new Usuario();
-        usuarioNew.setNombre(usuario.getNombre());
-        usuarioNew.setEmail(usuario.getEmail());
-        usuarioNew.setPassword(usuario.getPassword());
-        usuarioNew.setCelular(usuario.getCelular());
-        usuarioNew.setRole(usuario.getRole());
-        usuario.setFotoPerfil(foto);
-        usuario.setEstado(true);
-        usuario.setCreatedAt(LocalDate.now());
-        return usuarioRepository.save(usuario);
+        if (usuarioExists){
+            throw new BadRequestException("ERROR DUPLICADO: EL Email ya existe");
+        }
+
+        Usuario usuario = new Usuario();
+
+        try {
+            usuario.setNombre(usuarioRegistroDto.getNombre());
+            usuario.setEmail(usuarioRegistroDto.getEmail());
+            usuario.setPassword(usuarioRegistroDto.getPassword());
+            usuario.setCelular(usuarioRegistroDto.getCelular());
+            usuario.setRole(usuarioRegistroDto.getRole());
+            usuario.setFotoPerfil(foto);
+            usuario.setEstado(true);
+            usuario.setCreatedAt(LocalDate.now());
+            usuarioRepository.save(usuario);
+        }catch (DataAccessException e){
+            throw new BadRequestException("ERROR CREACION: Falla no es posible realizar el proceso de creación!", e);
+        }
+        return converitDtoAUsuario(usuario);
     }
 
     @Override
-    public Usuario update(Long id, Usuario usuario) {
-        String fotoActualizada = "dummyactualizado.jpg";
+    public UsuarioDto update(Long id, UsuarioRegistroDto usuarioRegistroDto) {
 
-        Usuario usuarioId = findById(id);
+        Usuario usuario = findById(id);
 
-        if (usuarioId != null){
-            usuarioId.setNombre(usuario.getNombre());
-            usuarioId.setEmail(usuario.getEmail());
-            usuarioId.setPassword(usuario.getPassword());
-            usuarioId.setCelular(usuario.getCelular());
-            usuarioId.setRole(usuario.getRole());
-            usuarioId.setFotoPerfil(fotoActualizada);
-            usuarioId.setUpdatedAt(LocalDate.now());
+        boolean usuarioExists = usuarioRepository.existsByEmailAndIdNot(usuarioRegistroDto.getEmail(), id);
+
+        if (usuarioExists){
+            throw new BadRequestException("El email ya existe!");
         }
-        return usuarioRepository.save(usuarioId);
+
+        try {
+            if (usuario != null){
+                usuario.setNombre(usuarioRegistroDto.getNombre());
+                usuario.setEmail(usuarioRegistroDto.getEmail());
+                usuario.setPassword(usuarioRegistroDto.getPassword());
+                usuario.setCelular(usuarioRegistroDto.getCelular());
+                usuario.setRole(usuarioRegistroDto.getRole());
+                usuario.setFotoPerfil(foto + "actualilzada");
+                usuario.setUpdatedAt(LocalDate.now());
+            }else{
+                throw new BadRequestException("ERROR ACTUALIZACION: no es posible acutalizar el usuario");
+            }
+        }catch (DataAccessException e){
+            throw new BadRequestException("ERROR ACTUALIZACION: Falla no es posible realizar el proceso!" , e);
+        }
+        usuarioRepository.save(usuario);
+        return converitDtoAUsuario(usuario);
     }
 
     @Override
     public Usuario delete(Long id) {
         Usuario usuario = findById(id);
-        usuario.desactivarUsuario();
+        try {
+            usuario.desactivarUsuario();
+        }catch (DataAccessException e){
+            throw new BadRequestException("ERROR DELETE: No es posible eliminar el usuario");
+        }
         return usuarioRepository.save(usuario);
+    }
+
+    private UsuarioDto converitDtoAUsuario(Usuario usuario){
+        UsuarioDto usuarioDto = new UsuarioDto();
+        usuarioDto.setNombre(usuario.getNombre());
+        usuarioDto.setEmail(usuario.getEmail());
+        usuarioDto.setPassword(usuario.getPassword());
+        usuarioDto.setCelular(usuario.getCelular());
+        usuarioDto.setRole(usuario.getRole());
+        usuarioDto.setFotoPerfil(usuario.getFotoPerfil());
+        usuarioDto.setEstado(usuario.getEstado());
+        usuarioDto.setCreatedAt(usuario.getCreatedAt());
+        usuarioDto.setUpdatedAt(usuario.getUpdatedAt());
+        return usuarioDto;
     }
 }

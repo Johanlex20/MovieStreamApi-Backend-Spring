@@ -5,4 +5,7 @@ public class BadRequestException extends RuntimeException{
     public BadRequestException(String string){
         super(string);
     }
+    public BadRequestException(String string, Throwable e){
+        super(string, e);
+    }
 }
