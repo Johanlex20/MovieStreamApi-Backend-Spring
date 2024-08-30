@@ -21,12 +21,12 @@ public class UsuarioController {
     private iUsuarioService usuarioService;
 
     @GetMapping(value = "/list")
-    private List<Usuario> findAll(){
+    private List<UsuarioDto> findAll(){
         return usuarioService.findAll();
     }
 
     @GetMapping
-    public Page<Usuario> paginate(@PageableDefault(sort = "nombre", direction = Sort.Direction.ASC, size = 5) Pageable pageable){
+    public Page<UsuarioDto> paginate(@PageableDefault(sort = "nombre", direction = Sort.Direction.ASC, size = 5) Pageable pageable){
         return usuarioService.paginate(pageable);
     }
 

@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UsuarioService implements iUsuarioService {
@@ -23,13 +24,17 @@ public class UsuarioService implements iUsuarioService {
     private iUsuarioRepository usuarioRepository;
 
     @Override
-    public List<Usuario> findAll() {
-        return usuarioRepository.findAll();
+    public List<UsuarioDto> findAll() {
+        List<Usuario> usuarios = usuarioRepository.findAll();
+        return usuarios.stream()
+                .map(this::converitDtoAUsuario)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Page<Usuario> paginate(Pageable pageable) {
-        return usuarioRepository.findAll(pageable);
+    public Page<UsuarioDto> paginate(Pageable pageable) {
+        Page<Usuario> usuarios = usuarioRepository.findAll(pageable);
+        return usuarios.map(this::converitDtoAUsuario);
     }
 
     @Override
