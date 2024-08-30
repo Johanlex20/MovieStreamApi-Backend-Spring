@@ -1,6 +1,7 @@
 package com.Movie_Spring.MovieSteamApi_Backend_Spring.Services;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.Services.iServices.iHomeService;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Genero;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Serie;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.serie.SerieDBDto;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.repository.iHomeRepository;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.repository.iSerieRepository;
@@ -52,6 +53,26 @@ public class HomeService implements iHomeService {
     public List<SerieDBDto> findByPlataforma(String plataforma){
         return homeRepository.findByPlataforma(plataforma)
                 .stream()
+                .map(serie -> new SerieDBDto(
+                        serie.getId(),
+                        serie.getIdSerie(),
+                        serie.getTitulo(),
+                        /*serie.getSinopsis(),*/
+                        serie.getPoster(),
+                        serie.getPopularidad(),
+                        serie.getNumTemporadas(),
+                        serie.getNumEpisodiosTotal(),
+                        serie.getGenero(),
+                        serie.getTituloVideo(),
+                        serie.getVideoKey(),
+                        serie.getFechaLanzamientoSerie(),
+                        serie.getPlataforma()
+                )).collect(Collectors.toList());
+    }
+
+    public List<SerieDBDto> getLastSeries(){
+        List<Serie> series = homeRepository.findTop5ByOrderByCreatedAtDesc();
+        return series.stream()
                 .map(serie -> new SerieDBDto(
                         serie.getId(),
                         serie.getIdSerie(),

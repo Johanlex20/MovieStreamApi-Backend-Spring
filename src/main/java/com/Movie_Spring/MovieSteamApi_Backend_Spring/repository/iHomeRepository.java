@@ -14,5 +14,6 @@ public interface iHomeRepository extends JpaRepository<Serie,Long> {
 
     List<Serie> findByPlataforma(@Param("plataforma") String plataforma);
 
+    List<Serie> findTop5ByOrderByCreatedAtDesc();
 
 }

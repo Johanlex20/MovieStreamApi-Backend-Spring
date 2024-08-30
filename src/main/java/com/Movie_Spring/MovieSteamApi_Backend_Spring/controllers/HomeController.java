@@ -1,5 +1,6 @@
 package com.Movie_Spring.MovieSteamApi_Backend_Spring.controllers;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.Services.HomeService;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Serie;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.serie.SerieDBDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,5 +25,9 @@ public class HomeController {
         return homeService.findByPlataforma(plataforma);
     }
 
+    @GetMapping(value = "/series/last")
+    public List<SerieDBDto> getLastSeries(){
+        return homeService.getLastSeries();
+    }
 
 }
