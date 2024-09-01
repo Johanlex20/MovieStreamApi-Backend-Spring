@@ -14,12 +14,12 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SeguridadWebConfiguracion {
-    //private String jwtSecreto = "chLhMF9w3mwDutysbQxsX8x4CGwZef4mayTGSmbAG2BUsXbYFKvXrVfnPCa62PJxp9TuHxx4PQAS2yGUTBAPy3Dy53j8Uj2wb2AQ3nK8VLg7tUx9HCzHATEp";
-    @Value("${api.security.secret}")
-    private String jwtSecreto;
-    //private Long jwtValidacionEnSegundos = 2592000L;
-    @Value("${api.security.validity-in-seconds}")
-    private Long jwtValidacionEnSegundos;
+    private String jwtSecreto = "chLhMF9w3mwDutysbQxsX8x4CGwZef4mayTGSmbAG2BUsXbYFKvXrVfnPCa62PJxp9TuHxx4PQAS2yGUTBAPy3Dy53j8Uj2wb2AQ3nK8VLg7tUx9HCzHATEp";
+    //@Value("${api.security.secret}")
+    //private String jwtSecreto;
+    private Long jwtValidacionEnSegundos = 2592000L;
+    //@Value("${api.security.validity-in-seconds}")
+    //private Long jwtValidacionEnSegundos;
 
     @Bean
      SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
