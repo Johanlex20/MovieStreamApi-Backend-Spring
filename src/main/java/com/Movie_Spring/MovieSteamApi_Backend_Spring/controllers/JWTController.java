@@ -47,7 +47,7 @@ public class JWTController {
                 .orElseThrow(ResourceNotFoundException::new);
 
         RespuestaAutenticacion respuestaAutenticacion = new RespuestaAutenticacion(token, new PerfilUsuarioDTO(
-                usuario.getId(),
+
                 usuario.getNombre(),
                 usuario.getEmail(),
                 usuario.getPassword(),
