@@ -4,21 +4,20 @@ import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Usuario;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.usuario.UsuarioDto;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.usuario.UsuarioRegistroDto;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/usuario")
+@AllArgsConstructor
 public class UsuarioController {
 
-    @Autowired
-    private iUsuarioService usuarioService;
+    private final iUsuarioService usuarioService;
 
     @GetMapping(value = "/list")
     private List<UsuarioDto> findAll(){
