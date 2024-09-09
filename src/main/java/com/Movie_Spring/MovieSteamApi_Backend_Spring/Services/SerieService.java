@@ -13,6 +13,8 @@ import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.serie.SerieDBDt
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.repository.iEpisodioRepository;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.repository.iSerieRepository;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.repository.iTemporadaRepository;
+import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class SerieService implements iSerieService {
 
     private final ApiService apiService;
@@ -30,12 +33,12 @@ public class SerieService implements iSerieService {
     private final iTemporadaRepository temporadaRepository;
     private final iEpisodioRepository episodioRepository;
 
-    public SerieService(ApiService apiService, iSerieRepository serieRepository, iTemporadaRepository temporadaRepository, iEpisodioRepository episodioRepository) {
-        this.apiService = apiService;
-        this.serieRepository = serieRepository;
-        this.temporadaRepository = temporadaRepository;
-        this.episodioRepository = episodioRepository;
-    }
+//    public SerieService(ApiService apiService, iSerieRepository serieRepository, iTemporadaRepository temporadaRepository, iEpisodioRepository episodioRepository) {
+//        this.apiService = apiService;
+//        this.serieRepository = serieRepository;
+//        this.temporadaRepository = temporadaRepository;
+//        this.episodioRepository = episodioRepository;
+//    }
 
     @Override
     public List<SerieDBDto> findAll() {
