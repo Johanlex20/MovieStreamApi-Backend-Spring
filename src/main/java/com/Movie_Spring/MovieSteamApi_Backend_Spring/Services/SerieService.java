@@ -33,13 +33,6 @@ public class SerieService implements iSerieService {
     private final iTemporadaRepository temporadaRepository;
     private final iEpisodioRepository episodioRepository;
 
-//    public SerieService(ApiService apiService, iSerieRepository serieRepository, iTemporadaRepository temporadaRepository, iEpisodioRepository episodioRepository) {
-//        this.apiService = apiService;
-//        this.serieRepository = serieRepository;
-//        this.temporadaRepository = temporadaRepository;
-//        this.episodioRepository = episodioRepository;
-//    }
-
     @Override
     public List<SerieDBDto> findAll() {
         List<Serie> series = serieRepository.findAll();
@@ -63,11 +56,16 @@ public class SerieService implements iSerieService {
     public Serie guardarSerie(NombreSerieDto nombreSerieDto){
         String nombreSerie = nombreSerieDto.nombreSerie();
 
-        if (serieRepository.existsByTitulo(nombreSerie)){
-          throw new BadRequestException("La Serie ya existe!");
+        SerieDto serieDto;
+
+        try{
+            if (serieRepository.existsByTitulo(nombreSerie)){
+                throw new BadRequestException("La Serie ya existe!");
+            }
+        }catch (Exception e) {
+            throw new BadRequestException("La serie ya existe!");
         }
 
-        SerieDto serieDto;
         try {
             serieDto = apiService.obtenerDatosSerie(nombreSerie);
         } catch (Exception e){
@@ -144,9 +142,14 @@ public class SerieService implements iSerieService {
 
         Serie serie = serieRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Serie no encontrada con Id: " + id));
 
-        serie.setTitulo(serieActualizarDTO.getTitulo());
+        serie.setTitulo(serieActualizarDTO.getNombreSerie());
         serie.setSinopsis(serieActualizarDTO.getSinopsis());
-        serie.setPoster(serieActualizarDTO.getPoster());
+        //serie.setPoster(serieActualizarDTO.getPoster());
+        serie.setPopularidad(serieActualizarDTO.getPopularidad());
+        serie.setNumTemporadas(serieActualizarDTO.getNumTemporadas());
+        serie.setNumEpisodiosTotal(serieActualizarDTO.getNumEpisodiosTotal());
+        serie.setVideoKey(serieActualizarDTO.getVideoKey());
+        serie.setPlataforma(serieActualizarDTO.getPlataforma());
         serie.setGenero(serieActualizarDTO.getGenero());
         serie.setUpdatedAt(LocalDateTime.now());
         serie = serieRepository.save(serie);

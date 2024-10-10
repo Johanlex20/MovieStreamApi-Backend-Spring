@@ -5,11 +5,22 @@ import lombok.Data;
 @Data
 public class SerieActualizarDTO {
 
-    private String titulo;
+    private String nombreSerie;
 
     private String sinopsis;
 
-    private String poster;
+    //private String poster;
 
     private Genero genero;
+
+    private Double popularidad;
+
+    private Integer numTemporadas;
+
+    private Integer numEpisodiosTotal;
+
+    private String videoKey;
+
+    private String plataforma;
+
 }
