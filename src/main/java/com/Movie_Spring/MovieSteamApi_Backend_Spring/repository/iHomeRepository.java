@@ -16,4 +16,5 @@ public interface iHomeRepository extends JpaRepository<Serie,Long> {
 
     List<Serie> findTop5ByOrderByCreatedAtDesc();
 
+    List<Serie> findByTituloIgnoreCase(@Param("titulo") String titulo);
 }

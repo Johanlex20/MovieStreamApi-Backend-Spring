@@ -30,4 +30,9 @@ public class HomeController {
         return homeService.getLastSeries();
     }
 
+    @GetMapping(value = "/series/titulo")
+    public List<SerieDBDto> getSeriesByTitle(@RequestParam String titulo){
+        return  homeService.findByTitulo(titulo);
+    }
+
 }

@@ -40,7 +40,7 @@ public class SerieController {
     }
 
     @GetMapping
-    public Page<SerieDBDto> paginacion(@PageableDefault(sort = "titulo", direction = Sort.Direction.ASC, size = 6) Pageable pageable){
+    public Page<SerieDBDto> paginacion(@PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC, size = 6) Pageable pageable){
         return serieService.paginacion(pageable);
     }
 

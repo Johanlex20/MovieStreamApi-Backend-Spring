@@ -39,7 +39,8 @@ public class ApiService {
                     serieDetalles.genero(),
                     videoDto,
                     serieDetalles.fechaLanzamientoSerie(),
-                    serieDetalles.plataforma()
+                    serieDetalles.plataforma(),
+                    serieDetalles.promedioVotos()
             );
         }
         return null;

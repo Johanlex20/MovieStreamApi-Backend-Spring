@@ -54,6 +54,8 @@ public class Serie {
 
     private String plataforma;
 
+    private Double promedioVotos;
+
     public Serie() {
     }
 
@@ -83,6 +85,7 @@ public class Serie {
                 .stream()
                 .map(PlataformaVideoDto::plataforma)
                 .findFirst().orElse(null);
+        this.promedioVotos = serieDto.promedioVotos();
     }
 
 }

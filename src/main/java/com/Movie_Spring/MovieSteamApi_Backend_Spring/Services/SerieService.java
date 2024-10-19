@@ -182,6 +182,7 @@ public class SerieService implements iSerieService {
         serieDBDto.setTituloVideo(serie.getTituloVideo());
         serieDBDto.setFechaLanzamientoSerie(serie.getFechaLanzamientoSerie());
         serieDBDto.setPlataforma(serie.getPlataforma());
+        serieDBDto.setPromedioVotos(serie.getPromedioVotos());
         return serieDBDto;
     }
 }

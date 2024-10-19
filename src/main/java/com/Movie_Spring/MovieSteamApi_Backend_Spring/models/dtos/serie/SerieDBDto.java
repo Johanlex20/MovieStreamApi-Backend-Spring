@@ -35,14 +35,16 @@ public class SerieDBDto {
 
     private String plataforma;
 
+    private Double promedioVotos;
+
     public SerieDBDto() {
     }
 
-    public SerieDBDto(Long id, Long idSerie, String titulo, /*Stringsinopsis,*/  String poster, Double popularidad, Integer numTemporadas, Integer numEpisodiosTotal, Genero genero, String videoKey,String tituloVideo, LocalDate fechaLanzamientoSerie, String plataforma) {
+    public SerieDBDto(Long id, Long idSerie, String titulo, String sinopsis,  String poster, Double popularidad, Integer numTemporadas, Integer numEpisodiosTotal, Genero genero, String videoKey,String tituloVideo, LocalDate fechaLanzamientoSerie, String plataforma, Double promedioVotos) {
         this.id = id;
         this.idSerie = idSerie;
         this.titulo = titulo;
-        //this.sinopsis = sinopsis;
+        this.sinopsis = sinopsis;
         this.poster = poster;
         this.popularidad = popularidad;
         this.numTemporadas = numTemporadas;
@@ -52,6 +54,7 @@ public class SerieDBDto {
         this.tituloVideo =tituloVideo;
         this.fechaLanzamientoSerie = fechaLanzamientoSerie;
         this.plataforma = plataforma;
+        this.promedioVotos = promedioVotos;
 
     }
 
@@ -59,7 +62,7 @@ public class SerieDBDto {
         this.id = serie.getId();
         this.idSerie = serie.getIdSerie();
         this.titulo = serie.getTitulo();
-        //this.sinopsis = sinopsis;
+        this.sinopsis = serie.getSinopsis();
         this.poster = serie.getPoster();
         this.popularidad = serie.getPopularidad();
         this.numTemporadas = serie.getNumTemporadas();
@@ -69,6 +72,7 @@ public class SerieDBDto {
         this.tituloVideo = serie.getTituloVideo();
         this.fechaLanzamientoSerie = serie.getFechaLanzamientoSerie();
         this.plataforma = serie.getPlataforma();
+        this.promedioVotos = serie.getPromedioVotos();
     }
 
 

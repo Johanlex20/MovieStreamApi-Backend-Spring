@@ -1,5 +1,6 @@
 package com.Movie_Spring.MovieSteamApi_Backend_Spring.Services;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.Services.iServices.iHomeService;
+import com.Movie_Spring.MovieSteamApi_Backend_Spring.exceptions.ResourceNotFoundException;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Genero;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.Serie;
 import com.Movie_Spring.MovieSteamApi_Backend_Spring.models.dtos.serie.SerieDBDto;
@@ -37,7 +38,7 @@ public class HomeService implements iHomeService {
                         serie.getId(),
                         serie.getIdSerie(),
                         serie.getTitulo(),
-                        /*serie.getSinopsis(),*/
+                        serie.getSinopsis(),
                         serie.getPoster(),
                         serie.getPopularidad(),
                         serie.getNumTemporadas(),
@@ -46,7 +47,8 @@ public class HomeService implements iHomeService {
                         serie.getTituloVideo(),
                         serie.getVideoKey(),
                         serie.getFechaLanzamientoSerie(),
-                        serie.getPlataforma()
+                        serie.getPlataforma(),
+                        serie.getPromedioVotos()
                 )).collect(Collectors.toList());
     }
 
@@ -57,7 +59,7 @@ public class HomeService implements iHomeService {
                         serie.getId(),
                         serie.getIdSerie(),
                         serie.getTitulo(),
-                        /*serie.getSinopsis(),*/
+                        serie.getSinopsis(),
                         serie.getPoster(),
                         serie.getPopularidad(),
                         serie.getNumTemporadas(),
@@ -66,7 +68,8 @@ public class HomeService implements iHomeService {
                         serie.getTituloVideo(),
                         serie.getVideoKey(),
                         serie.getFechaLanzamientoSerie(),
-                        serie.getPlataforma()
+                        serie.getPlataforma(),
+                        serie.getPromedioVotos()
                 )).collect(Collectors.toList());
     }
 
@@ -77,7 +80,7 @@ public class HomeService implements iHomeService {
                         serie.getId(),
                         serie.getIdSerie(),
                         serie.getTitulo(),
-                        /*serie.getSinopsis(),*/
+                        serie.getSinopsis(),
                         serie.getPoster(),
                         serie.getPopularidad(),
                         serie.getNumTemporadas(),
@@ -86,8 +89,42 @@ public class HomeService implements iHomeService {
                         serie.getTituloVideo(),
                         serie.getVideoKey(),
                         serie.getFechaLanzamientoSerie(),
-                        serie.getPlataforma()
+                        serie.getPlataforma(),
+                        serie.getPromedioVotos()
                 )).collect(Collectors.toList());
+    }
+
+    public List<SerieDBDto> findByTitulo(String titulo){
+
+            if (titulo == null || titulo.trim().isEmpty()) {
+                throw new ResourceNotFoundException("El título no puede estar vacío. Intenta otra vez.");
+            }
+
+                List<SerieDBDto> seriesEncontradas = homeRepository.findByTituloIgnoreCase(titulo)
+                        .stream()
+                        .map(serie -> new SerieDBDto(
+                                serie.getId(),
+                                serie.getIdSerie(),
+                                serie.getTitulo(),
+                                serie.getSinopsis(),
+                                serie.getPoster(),
+                                serie.getPopularidad(),
+                                serie.getNumTemporadas(),
+                                serie.getNumEpisodiosTotal(),
+                                serie.getGenero(),
+                                serie.getTituloVideo(),
+                                serie.getVideoKey(),
+                                serie.getFechaLanzamientoSerie(),
+                                serie.getPlataforma(),
+                                serie.getPromedioVotos()
+                        )).collect(Collectors.toList());
+
+            if (seriesEncontradas.isEmpty()){
+                throw new ResourceNotFoundException("Serie no encontrada, intenta otra vez.");
+            }
+
+        return seriesEncontradas;
+
     }
 
 }

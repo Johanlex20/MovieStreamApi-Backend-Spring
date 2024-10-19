@@ -15,5 +15,6 @@ public record SerieDto(
         @JsonAlias("genres") List<GeneroDto> genero,
         @JsonAlias("video") VideoDto video,
         @JsonAlias("first_air_date") String fechaLanzamientoSerie,
-        @JsonAlias("networks") List<PlataformaVideoDto> plataforma
+        @JsonAlias("networks") List<PlataformaVideoDto> plataforma,
+        @JsonAlias("vote_average")Double promedioVotos
 ) {}
