@@ -32,4 +32,9 @@ public class TemporadaController {
         return temporadaService.findByTituloSerieAndNumeroTemporada(titulo, numeroTemporada);
     }
 
+    @GetMapping("/{id}")
+    public Temporada findTemporadaById(@PathVariable(value = "id") Long id){
+        return temporadaService.findByTemporada(id);
+    }
+
 }

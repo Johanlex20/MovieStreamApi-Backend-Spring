@@ -31,6 +31,11 @@ public class TemporadaService implements iTemporadaService {
         return temporadaRepository.findByTituloSerieAndNumeroTemporada(titulo, numeroTemporada);
     }
 
+    @Override
+    public Temporada findByTemporada(Long id) {
+        return temporadaRepository.findById(id).orElseThrow();
+    }
+
 
     private Temporadas convertirTemporadasDto(Temporada temporada){
         Temporadas temporadas = new Temporadas();

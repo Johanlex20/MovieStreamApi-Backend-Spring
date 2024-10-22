@@ -9,4 +9,6 @@ public interface iTemporadaService {
     List<Temporadas> findByTituloSerie(String titulo);
 
     Temporada findByTituloSerieAndNumeroTemporada(String titulo, Long numeroTemporada);
+
+    Temporada findByTemporada(Long id);
 }
