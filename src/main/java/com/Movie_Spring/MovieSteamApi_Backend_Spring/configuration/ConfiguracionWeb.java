@@ -12,8 +12,8 @@ public class ConfiguracionWeb {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/api/**")
-                        .allowedOrigins("https://streamgood.modoblu.com", "http://localhost:4200")
+                registry.addMapping("/**")
+                        .allowedOrigins("https://movie.modoblu.com", "http://localhost:4200")
                         .allowedMethods("*")
                         .exposedHeaders("*")
                         .allowCredentials(true);  // <--- importante si envías cookies o cabeceras de autorización
