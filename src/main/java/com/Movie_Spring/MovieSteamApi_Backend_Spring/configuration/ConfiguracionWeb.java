@@ -13,9 +13,10 @@ public class ConfiguracionWeb {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/**")
-                        .allowedOrigins("http://localhost:4200","http://good_proyects.com")
+                        .allowedOrigins("https://streamgood.modoblu.com", "http://localhost:4200")
                         .allowedMethods("*")
-                        .exposedHeaders("*");
+                        .exposedHeaders("*")
+                        .allowCredentials(true);  // <--- importante si envías cookies o cabeceras de autorización
             }
         };
     }
