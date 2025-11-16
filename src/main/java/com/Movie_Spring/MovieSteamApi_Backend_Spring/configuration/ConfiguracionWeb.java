@@ -13,7 +13,8 @@ public class ConfiguracionWeb {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("https://movie.modoblu.com", "http://localhost:4202")
+                        .allowedOrigins("https://movie.modoblu.com",
+                                "http://localhost:4200","http://localhost:4202")
                         .allowedMethods("*")
                         .exposedHeaders("*")
                         .allowCredentials(true);  // <--- importante si envías cookies o cabeceras de autorización
